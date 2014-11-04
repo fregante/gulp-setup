@@ -1,0 +1,13 @@
+{
+  "name": "",
+  "version": "1.0.0",
+  "authors": [
+    "Federico Brigante"
+  ],
+  "license": "no",
+  "private": true,
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "normalize-css": "~3.0.1"
+  }
+}
