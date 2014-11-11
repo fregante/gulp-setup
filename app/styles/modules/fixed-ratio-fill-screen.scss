@@ -1,0 +1,66 @@
+/**
+ * fixed-ratio-fill-screen
+ * Make a fixed-ratio element (like videos) fill the screen (or a percentage of it)
+ * 2014-11-07
+ * @param  {pixels}     $original-width    Pixel-based width of the element
+ *                                         (e.g. the width of the video)
+ * @param  {pixels}     $original-height   Pixel-based height of the element
+ *                                         (e.g. the height of the video)
+ * @param  {percentage} $relative-width    Width of the element relative to the viewport, in %
+ *                                         (e.g. 100% fills the viewport horizontally)
+ *                                         (e.g. 33% will be a third of the viewport)
+ * @param  {percentage} $relative-height   Height of the element relative to the viewport, in %
+ *                                         (e.g. 100% fills the viewport verically)
+ *                                         (e.g. 33% will be a third of the viewport)
+ *
+ * @include fixed-ratio-fill-screen(1280px, 720px);
+ *
+ * @include fixed-ratio-fill-screen(1280px, 720px, 100%, 90%);
+ * @include fixed-ratio-fill-screen_container($set-height: 90%);
+ */
+
+@function _fixed-ratio-fill-screen_strip-units($number) {
+	@return $number / ($number * 0 + 1);
+}
+@function _fixed-ratio-fill-screen_fraction($percentage) {
+	@if unitless($percentage) {
+		@return $percentage; //already a fraction
+	}
+	@return _fixed-ratio-fill-screen_strip-units($percentage) / 100;
+}
+@mixin fixed-ratio-fill-screen ($original-width: false, $original-height: false, $relative-width: 100%, $relative-height: 100%) {
+	position: absolute;
+	$original-width: _fixed-ratio-fill-screen_strip-units($original-width);
+	$original-height: _fixed-ratio-fill-screen_strip-units($original-height);
+
+	//keep these outside the queries as a fallback
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+
+	$adjusted-viewport-width: round($original-width / _fixed-ratio-fill-screen_fraction($relative-width));
+	$adjusted-viewport-height: round($original-height / _fixed-ratio-fill-screen_fraction($relative-height));
+	$ratio-narrow: $original-width/$original-height;
+	$ratio-wide: $original-height/$original-width;
+	@media (min-aspect-ratio: #{$adjusted-viewport-width}/#{$adjusted-viewport-height}) {
+		height: $ratio-wide * 100vw;
+		top: 50%;
+		transform: translate(0, -50%);
+	}
+	@media (max-aspect-ratio: #{$adjusted-viewport-width}/#{$adjusted-viewport-height}) {
+		width: $ratio-narrow * 100vh;
+		left: 50%;
+		transform: translate(-50%);
+	}
+}
+@mixin fixed-ratio-fill-screen_container ($set-width: false, $set-height: false) {
+	position: relative;
+	overflow: hidden;
+	@if $set-width {
+		width: _fixed-ratio-fill-screen_strip-units($set-width) * 1vw;
+	}
+	@if $set-height {
+		height: _fixed-ratio-fill-screen_strip-units($set-height) * 1vh;
+	}
+}

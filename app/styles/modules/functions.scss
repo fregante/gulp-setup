@@ -1,0 +1,10 @@
+//enter 40px, 400px; get 10%
+@function fractionOf($fraction, $whole) {
+	@return percentage(strip-units($fraction) / strip-units($whole));
+}
+
+//http://stackoverflow.com/a/12335841/288906
+//How do you strip the unit from any number in SASS?
+@function strip-units($number) {
+	@return $number / ($number * 0 + 1);
+}

@@ -1,0 +1,32 @@
+/**
+ * responsive-fixed-ratio
+ * Make an element keep its ratio when its container is resized
+ * 2014-11-05
+ * @param  {pixels}     $pixel-width    Pixel-based width of the element
+ *                                      (e.g. the width of the video)
+ * @param  {pixels}     $pixel-height   Pixel-based height of the element
+ *                                      (e.g. the height of the video)
+ * @param  {percentage} $relative-width Width of the element, in %
+ *                                      (e.g. 100% will fill its container)
+ *                                      (e.g. 33% will be a third of its container)
+ *
+ * @include responsive-fixed-ratio(320px, 240px);
+ */
+@function _responsive-fixed-ratio_strip-units($number) {
+	@return $number / ($number * 0 + 1);
+}
+@mixin responsive-fixed-ratio ($pixel-width: false, $pixel-height: false, $relative-width: 100%) {
+	@if $pixel-width {
+		$ratio: $pixel-width / $pixel-height;
+		position: relative;
+		width: $relative-width;
+		padding-top: _responsive-fixed-ratio_strip-units($relative-width / $ratio) * 1%;
+		height: 0;
+	} @else {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+	}
+}
