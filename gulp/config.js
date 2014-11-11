@@ -41,7 +41,7 @@ module.exports = {
 		dest: destAssets
 	},
 	markup: {
-		src: src + "/htdocs/**",
+		src: src + "/htdocs/**/*.{html,jade,php}",
 		dest: dest
 	},
 	copy: [{
