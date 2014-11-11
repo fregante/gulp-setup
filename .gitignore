@@ -3,6 +3,7 @@ bower_components
 node_modules
 build/
 dist/
+public/assets
 *.css.map
 
 # OS files
@@ -20,7 +21,7 @@ Thumbs.db
 # Caches, logs, and temps
 .sass-cache
 .sublime-grunt.cache
-.grunt
+.grunt # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .codekit-cache
 npm-debug.log
 .tmp
@@ -28,10 +29,13 @@ npm-debug.log
 *.bak
 *.log
 /caches/
+logs
+.env # Ignore .env configuration files
 
 # Binaries
 *.psd
 psd
+docs
 *.gz
 /backups/
 
