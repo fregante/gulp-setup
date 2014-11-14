@@ -16,6 +16,7 @@ module.exports = {
 				'/bower_components': '../app/bower_components'
 			}
 		},
+		minify: false,
 		// ghostMode: {
 		// 	clicks: true,
 		// 	location: true,
@@ -24,11 +25,11 @@ module.exports = {
 		// },
 		logFileChanges: false,
 		open: false,
-		minify: false,
 		files: [
 			dest + '/**',
 			// Exclude Map files
-			'!' + dest + '/**.map'
+			'!' + destAssets + '/**.map',
+			'!' + dest + '/**/*.html'
 		]
 	},
 	sass: {
