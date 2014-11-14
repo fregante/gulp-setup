@@ -1,5 +1,5 @@
-var dest = "./dist";
-var destAssets = "./dist/assets";
+var dest = './dist';
+var destAssets = './dist/assets';
 var src = './app';
 var srcAssets = './app/assets';
 
@@ -13,7 +13,7 @@ module.exports = {
 			// for sass sourcemap linking
 			baseDir: [dest, src],
 			routes: {
-				"/bower_components": "../app/bower_components"
+				'/bower_components': '../app/bower_components'
 			}
 		},
 		// ghostMode: {
@@ -26,22 +26,22 @@ module.exports = {
 		open: false,
 		minify: false,
 		files: [
-			dest + "/**",
+			dest + '/**',
 			// Exclude Map files
-			"!" + dest + "/**.map"
+			'!' + dest + '/**.map'
 		]
 	},
 	sass: {
 		includePaths: [src + '/bower_components'],
-		src: src + "/styles/*.{sass,scss}",
+		src: src + '/styles/*.{sass,scss}',
 		dest: destAssets
 	},
 	images: {
-		src: srcAssets + "/images/**",
+		src: srcAssets + '/images/**',
 		dest: destAssets
 	},
 	markup: {
-		src: src + "/htdocs/**/*.{html,jade,php}",
+		src: src + '/htdocs/**/*.{html,jade,php}',
 		dest: dest
 	},
 	copy: [{

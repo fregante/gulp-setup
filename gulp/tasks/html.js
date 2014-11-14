@@ -1,5 +1,6 @@
+'use strict';
 var gulp   = require('gulp');
-var config = require('../config').markup
+var config = require('../config').markup;
 var log    = require('../util/logging');
 var es     = require('event-stream');
 

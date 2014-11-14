@@ -1,3 +1,4 @@
+'use strict';
 var changed    = require('gulp-changed');
 var gulp       = require('gulp');
 var config     = require('../config').copy;
@@ -14,5 +15,3 @@ gulp.task('copy', function() {
 	});
 	return es.merge.apply(es, groups);
 });
-
-
