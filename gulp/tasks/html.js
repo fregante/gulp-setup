@@ -12,7 +12,11 @@ gulp.task('html', function() {
 	var jadeFilesOnly = '**/*.jade';
 	var htmlFilesOnly = '**/*.html';
 	var noPartials = function (file) {
-		return !/\/_/.test(file.path) || !/^_/.test(file.relative);
+		var isWin = /^win/.test(process.platform);
+		if (isWin) {
+			return !/\\_/.test(file.path);
+		}
+		return !/\/_/.test(file.path);
 	};
 
 	var stream = gulp.src(config.src)
@@ -44,14 +48,32 @@ gulp.task('html', function() {
 
 		//add "relativeRoot" variable in Jade templates
 		.pipe($.data(function (file) {
-			var template = {
-				relativePath: file.history[0].replace(file.base, '')
-			};
-			var depth = (template.relativePath.match(/\//g) || []).length;
-			var relativeRoot = new Array(depth + 1).join( '../' );
+			var isWin = /^win/.test(process.platform);
+			var base;
+			var relativePath;
+			var filepath;
+			/*
+			file.base = 'app/docs'
+			file.cwd = 'C:\path'
+			file.history[0] = C:\\path\\app\\htdocs\\index.jade
+			 */
+			if(isWin) {
+				filepath = file.history[0].replace(/\\+/g, '/');// C:\\file.jade -> C:/file.jade
+				base = file.base.replace(/\\+/g, '/');// C:\path -> C:/path
+				// base = cwd + '/' + file.base + '/';// -> C:/path/app/docs/
+				relativePath = filepath.replace(base, '');// -> file.jade
+			} else {
+				if (file.base[0] === '/') {//absolute path
+					base = file.base;
+				} else {//relative path
+					base = file.cwd + '/' + file.base + '/';
+				}
+				relativePath = file.history[0].replace(base, '');
+			}
+			var depth = (relativePath.match(/\//g) || []).length;
+
 			return {
-				// template: template,
-				relativeRoot: relativeRoot
+				relativeRoot: new Array(depth + 1).join( '../' )
 			};
 		}))
 
