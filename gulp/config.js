@@ -60,12 +60,12 @@ module.exports = {
 	}],
 	browserify: [
 		{
-			entries: src + '/scripts/bfred.js',
+			entries: src + '/scripts/main.js',
 			dest: destAssets,
-			outputName: 'bfred.js'
+			outputName: 'main.js'
 		}/*, {
 			entries: src + '/scripts/head.js',
-			dest: dest,
+			dest: destAssets,
 			outputName: 'head.js'
 		}*/
 	]

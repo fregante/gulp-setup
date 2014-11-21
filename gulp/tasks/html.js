@@ -38,7 +38,7 @@ gulp.task('html', function() {
 		.pipe($.if(global.isWatching, $.cached('html')))
 
 		//find files that depend on the files that have changed
-		.pipe($.jadeInheritance({basedir: 'app/htdocs'}))
+		.pipe($.if(global.isWatching, $.jadeInheritance({basedir: 'app/htdocs'})))
 
 		//filter out partials
 		.pipe($.filter(noPartials))
