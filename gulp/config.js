@@ -34,7 +34,7 @@ module.exports = {
 	},
 	sass: {
 		includePaths: [src + '/bower_components'],
-		src: src + '/styles/*.{sass,scss}',
+		src: src + '/styles/**/*.{sass,scss}',
 		dest: destAssets
 	},
 	images: {
