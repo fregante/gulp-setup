@@ -50,7 +50,9 @@
   },
   "browserify": {
     "transform": [
-      "browserify-shim"
+      "browserify-shim",
+      "debowerify",
+      "deglobalify"
     ]
   },
   "browser": {
