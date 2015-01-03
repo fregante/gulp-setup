@@ -16,6 +16,7 @@ module.exports = {
 				'/bower_components': '../app/bower_components'
 			}
 		},
+		// proxy: 'http://kiacopy.tumblr.com/',//can be used *instead* of server
 		minify: false,
 		// ghostMode: {
 		// 	clicks: true,
