@@ -1,3 +1,4 @@
+'use strict';
 var notify = require('gulp-notify');
 var util = require('gulp-util');
 
@@ -16,7 +17,7 @@ log._message = function (options, callback) {
 log._working = function (options, callback) {
 	if (options.message) {
 		util.log(util.colors.cyan('⦿'), options.message, getAdditionalMessage(options));
-	};
+	}
 	callback && callback();
 };
 log._done = function (options, callback) {
