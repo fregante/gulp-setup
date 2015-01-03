@@ -1,19 +1,21 @@
 @import '../bower_components/normalize-css/normalize.css';
-@import 'modules/forms';
-@import 'modules/base';
-@import 'modules/responsive-fixed-ratio';
-@import 'modules/fixed-ratio-fill-screen';
-@import 'modules/functions';
+@import '_modules/forms';
+@import '_modules/base';
+@import '_modules/responsive-fixed-ratio';
+@import '_modules/fixed-ratio-fill-screen';
+@import '_modules/brandcolors';
+@import '_modules/functions';
 
 @-ms-viewport { min-width: device-width; }
 @-o-viewport { min-width: device-width; }
 @viewport { min-width: device-width; }
 
-
-$mq-sm: 41em;
-$mq-md: 75em;
-$mq-lg: 100em;
-$mq-xl: 145em;
+// @font-face {
+//     font-family: 'Franchise Free';
+//     src: url('franchise-free-bold.woff2') format('woff2'),
+//          url('franchise-free-bold.woff') format('woff');
+//     font-weight: bold;
+// }
 
 /**
  * LAYOUT

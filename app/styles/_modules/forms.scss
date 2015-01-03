@@ -1,4 +1,4 @@
-//2014-07-04
+//2014-12-17
 %os-element-reset {
 	display: inline-block;
 	overflow: visible;
@@ -52,22 +52,25 @@
 }
 
 %simple-checkbox-label-style{
+	padding-left: 1.1em;
 	padding-right: .5em;
 	cursor: pointer;
 	display: inline-block;
 	&:before{
-		content: '';
+		content: '✓';
 		display: inline-block;
 		margin-right: .3em;
 
-		width: 14px;
-		height: 14px;
-		font-size: 24px;
-		line-height: 0.3em;
+		width: 0.6em;
+		height: 0.6em;
+		line-height: 0.4em;
+		margin-left: -0.98em;
 
-		background: #D3D3D3;
+		color: transparent;
+		transition: 0.2s;
+		transition-property: color, text-shadow;
 		input:checked + &{
-			content: '✓';
+			color: inherit;
 		}
 	}
 }
