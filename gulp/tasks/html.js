@@ -18,6 +18,14 @@ gulp.task('html', function() {
 		}
 		return !/\/_/.test(file.path);
 	};
+	var jadeData;
+	try {
+		jadeData = require('../../app/htdocs/site-data.js');
+	} catch (e) {
+		if (e && e.code !== 'MODULE_NOT_FOUND') {
+			throw e;
+		}
+	}
 
 	var stream = gulp.src(config.src)
 		.pipe($.plumber({errorHandler: log.onError}));
@@ -77,8 +85,13 @@ gulp.task('html', function() {
 			};
 		}))
 
+		//add variables and functions from file
+		.pipe($.data(function () {
+			return jadeData;
+		}))
+
 		//process jade templates
-		.pipe($.jade());
+		.pipe($.jade({basedir: './'}));
 
 
 	//process php templates
