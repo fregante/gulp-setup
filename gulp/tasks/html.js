@@ -33,6 +33,9 @@ gulp.task('html', function() {
 	//separate html-only files
 	var htmlStream = stream.pipe($.filter(htmlFilesOnly))
 
+		//filter out partials
+		.pipe($.filter(noPartials))
+
 		//log what's being worked on
 		.pipe(log.working('<%= file.relative %>'));
 
