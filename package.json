@@ -13,6 +13,7 @@
     "gulp-buffer": "0.0.2",
     "gulp-changed": "^0.4.1",
     "gulp-cssimport": "^1.2.3",
+    "gulp-cdn-absolute-path": "0.0.4",
     "gulp-csso": "^0.2.9",
     "gulp-debug": "^1.0.1",
     "gulp-filter": "^1.0.2",

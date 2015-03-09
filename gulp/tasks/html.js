@@ -129,6 +129,13 @@ gulp.task('html', function() {
 			// 'preserve-comments': true
 		}))
 
+		// //link assets to development versions
+		// .pipe($.cdnAbsolutePath({
+		// 	asset: 'assets',
+		// 	cdn: 'http://khx5-gmyp.accessdomain.com/dev/tumblr/'
+		// 	// cdn: 'http://wac.12561.alphacdn.net/8012561/tumblr/tumblr-v4/'
+		// }))
+
 		//save all the files
 		.pipe(gulp.dest(config.dest))
 
