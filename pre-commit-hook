@@ -1,0 +1,37 @@
+#!/bin/sh
+# install this hook by running:
+: 'OSX:
+ln -s -f ../../pre-commit-hook .git/hooks/pre-commit
+chmod +x pre-commit-hook
+'
+
+# http://stackoverflow.com/a/24968164/288906
+# http://codeinthehole.com/writing/tips-for-using-a-git-pre-commit-hook/
+# https://gist.github.com/mudrd8mz/2828474
+
+if git rev-parse --verify HEAD >/dev/null 2>&1; then
+    against=HEAD
+else
+    against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+
+# only search in code being committed (works with patches)
+found=$(git diff-index --cached -U0 HEAD -- | grep 'git''stop' | wc -l)
+
+if [[ $found -gt 0 ]]; then
+	echo 'These files contain "git''stop". Remove the string before committing:'
+	echo
+
+	# this also includes files with unstaged lines in its search
+	for FILE in $(git diff-index --cached --name-status $against -- | cut -c3-) ; do
+	    # Check if the file contains 'git''stop' #string broken to avoid grepping this same file
+			if grep -q 'git''stop' "$FILE"
+			then
+			  echo "$FILE"
+			  found=1
+			fi
+	done
+	echo
+	exit 1
+fi
+exit
