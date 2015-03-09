@@ -58,8 +58,8 @@ module.exports = {
 		dest: dest
 	}, {
 		src: [
-			srcAssets + '/fonts/*',
-			srcAssets + '/videos/*'
+			srcAssets + '/fonts/**',
+			srcAssets + '/videos/**'
 		],
 		dest: destAssets
 	}],
