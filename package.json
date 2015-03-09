@@ -5,7 +5,6 @@
     "browserify": "^6.2.0",
     "browserify-shim": "^3.8.0",
     "deamdify": "^0.1.1",
-    "debowerify": "^0.9.1",
     "deglobalify": "^0.2.0",
     "event-stream": "^3.1.7",
     "gulp-autoprefixer": "~1.0.1",
@@ -51,7 +50,6 @@
   "browserify": {
     "transform": [
       "browserify-shim",
-      "debowerify",
       "deglobalify"
     ]
   },
