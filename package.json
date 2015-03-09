@@ -22,6 +22,7 @@
     "gulp-plumber": "^0.6.6",
     "gulp-sass": "^1.2.2",
     "gulp-uglify": "^1.0.1",
+    "gulp-svgstore": "^5.0.0",
     "gulp-util": "^3.0.1",
     "kew": "^0.5.0-alpha",
     "lodash": "^2.4.1",
@@ -58,5 +59,8 @@
   },
   "browserify-shim": {
     "lodash": "global:lodash"
+  },
+  "dependencies": {
+    "svg4everybody": "0.0.2"
   }
 }

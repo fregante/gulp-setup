@@ -12,6 +12,7 @@ var browserSync = require('browser-sync');
 gulp.task('watch', ['setWatch', 'browserSync'], function() {
   gulp.watch(config.sass.src,   ['styles']);
   gulp.watch(config.images.src, ['images']);
+  gulp.watch(config.svg.src,    ['svg']);
   gulp.watch(config.markup.src, ['html', browserSync.reload]);
 
   config.copy.forEach(function (group) {

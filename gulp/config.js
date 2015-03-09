@@ -42,6 +42,10 @@ module.exports = {
 		src: srcAssets + '/images/**',
 		dest: destAssets
 	},
+	svg: {
+		src: srcAssets + '/symbols/**/*.svg',
+		dest: destAssets
+	},
 	markup: {
 		src: src + '/htdocs/**/*.{html,jade,php}',
 		dest: dest
