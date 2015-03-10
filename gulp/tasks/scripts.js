@@ -43,7 +43,7 @@ gulp.task('scripts', function(callback) {
       return bundler
         .bundle()
         // Report compile errors
-        .on('error', handleErrors)
+        .on('error', log.onError)
         .on('end', reportFinished)
         // Use vinyl-source-stream to make the
         // stream gulp compatible. Specify the
