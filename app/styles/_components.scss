@@ -1,0 +1,21 @@
+/**
+ * COMPONENTS
+ * Designed components, chunks of UI.
+ */
+
+.blend-in-link {
+	text-decoration: none;
+	color: inherit;
+	&:hover,
+	&:focus {
+		text-decoration: underline;
+	}
+}
+.bare-link {
+	text-decoration: none;
+	color: inherit;
+	border-bottom: 1px solid;
+	&:active {
+		opacity: 0.6;
+	}
+}

@@ -1,23 +1,9 @@
-.cf{
-	&:after{
-		content:"";
-		display:table;
-		clear:both;
-	}
-}
-
-.ir {
-	text-indent: 110%;
-	white-space: nowrap;
-	overflow: hidden;
-	display: block;
-}
-
+/**
+ * TRUMPS
+ * helpers and overrides, usually applied directly to HTML rather than @extend'ed
+ */
 .u-avoid-break-inside {
 	display: inline-block;
-}
-.u-block-element {
-	display: block;
 }
 .thick {
 	font-weight: bold;
@@ -27,15 +13,9 @@
 .thin {
 	font-weight: 100;
 }
-.img--fill {
-	width: 100%;
-	height: auto;
+
+.u-block-element {
 	display: block;
-}
-iframe{
-	overflow: hidden;
-	border: none;
-	vertical-align: bottom;
 }
 
 .cb {
@@ -46,9 +26,6 @@ iframe{
 }
 .fr {
 	float: right;
-}
-a[tabindex='-1'] {
-	outline-style: none;
 }
 
 .screen-reader-text,
@@ -64,24 +41,23 @@ a[tabindex='-1'] {
 	width: 1px;
 }
 
-.alignleft {
+.img--fill {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.img--left {
 	display: inline;
 	float: left;
 }
-.alignright {
+.img--right {
 	display: inline;
 	float: right;
 }
-.aligncenter {
+.img--center {
 	clear: both;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-}
-
-%list-reset {
-	list-style: none;
-	margin-top: 0;
-	margin-bottom: 0;
-	padding-left: 0;
 }

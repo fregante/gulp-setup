@@ -1,3 +1,8 @@
+/**
+ * TOOLS
+ * Default mixins and functions
+ */
+
 //enter 40px, 400px; get 10%
 @function fractionOf($fraction, $whole) {
 	@return percentage(strip-units($fraction) / strip-units($whole));

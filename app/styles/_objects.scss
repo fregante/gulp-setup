@@ -1,0 +1,53 @@
+/**
+ * OBJECTS
+ * Cosmetic-free design patterns.
+ */
+
+%ir {
+	text-indent: 110%;
+	white-space: nowrap;
+	overflow: hidden;
+	display: block;
+}
+
+%list-reset {
+	list-style: none;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-left: 0;
+}
+
+%cf{
+	&:after{
+		content:"";
+		display:table;
+		clear:both;
+	}
+}
+
+
+%content-blocks-container {
+	%content-block {
+		margin-top: 0;
+		margin-bottom: $line-height * 1em;
+		margin-bottom: $line-height * 1rem;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+
+.flexible-video {
+	@include responsive-fixed-ratio (16, 9);
+	iframe {
+		@include responsive-fixed-ratio ();
+	}
+}
+
+.container {
+	max-width: 60em;
+	padding-left: 1em;
+	padding-right: 1em;
+	margin: auto;
+}

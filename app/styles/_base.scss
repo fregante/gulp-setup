@@ -1,0 +1,36 @@
+/**
+ * BASE FILE
+ Unclassed HTML elements, font-face
+ */
+
+@-ms-viewport { min-width: device-width; }
+@-o-viewport { min-width: device-width; }
+@viewport { min-width: device-width; }
+
+// @font-face {
+//     font-family: 'Franchise Free';
+//     src: url('franchise-free-bold.woff2') format('woff2'),
+//          url('franchise-free-bold.woff') format('woff');
+//     font-weight: bold;
+// }
+
+html {
+	font: 1.2em/#{$line-height} sans-serif;
+	overflow-y: scroll;
+	min-width: 320px;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+	font-size: 1em;
+}
+
+iframe{
+	overflow: hidden;
+	border: none;
+	vertical-align: bottom;
+}
+
+a[tabindex='-1'] {
+	outline-style: none;
+}
