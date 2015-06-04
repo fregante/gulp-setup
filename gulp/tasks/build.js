@@ -1,4 +1,4 @@
 'use strict';
 var gulp = require('gulp');
 
-gulp.task('build', ['scripts', 'styles', 'images', 'svg', 'html', 'copy']);
+gulp.task('build', ['js', 'css', 'images', 'svg', 'html', 'copy']);

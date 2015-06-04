@@ -12,14 +12,13 @@
 var browserify    = require('browserify');
 var watchify      = require('watchify');
 var gulp          = require('gulp');
-var handleErrors  = require('../util/handleErrors');
 var source        = require('vinyl-source-stream');
 var log           = require('../util/logging');
 var bundleConfigs = require('../config').browserify;
 
 var $ = require('gulp-load-plugins')();
 
-gulp.task('scripts', function(callback) {
+gulp.task('js', function(callback) {
 
   var bundleQueue = bundleConfigs.length;
 

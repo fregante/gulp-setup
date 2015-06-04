@@ -37,3 +37,6 @@ gulp.task('images', function() {
     .pipe(gulp.dest(config.dest))
 		.pipe(log.done('<%= file.relative %>'));
 });
+
+// shortcut
+gulp.task('img', ['images']);

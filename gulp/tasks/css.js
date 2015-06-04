@@ -3,11 +3,11 @@ var gulp         = require('gulp');
 var log          = require('../util/logging');
 var config       = require('../config').sass;
 var autoprefixer = require('autoprefixer-core');
-var postcssUrl   = require('postcss-url');
+var postcssImport= require('postcss-import');
 
 var $ = require('gulp-load-plugins')();
 
-gulp.task('styles', ['images'], function () {
+gulp.task('css', ['images'], function () {
 	var noPartials = function (file) {
 		var isWin = /^win/.test(process.platform);
 		if (isWin) {
@@ -20,16 +20,7 @@ gulp.task('styles', ['images'], function () {
 		autoprefixer({
 			browsers: ['last 2 versions', 'ie 9']
 		}),
-		postcssUrl({
-			url: 'inline',
-			// url: function (url) {
-			// 	if (true) {};
-			// 	var file = fs.readFileSync("input.css", "utf8");
-			// 	return 'data:image/svg+xml;charset=utf-8,'+
-			// },
-			maxSize: 6,//enough to fit index logo
-			basePath: '../../dist/assets'
-		})
+		postcssImport()
 	];
 
 	return gulp.src(config.src)
@@ -37,12 +28,12 @@ gulp.task('styles', ['images'], function () {
 		.pipe($.filter(noPartials))
 		.pipe(log.working('<%= file.relative %>'))
 
+		.pipe($.sassBulkImport())
 		.pipe($.sass({
 			outputStyle: 'expanded',
 			sourcemap: global.isWatching,
 			includePaths: config.includePaths
 		}))
-		.pipe($.cssimport())
 		.pipe($.postcss(processors))
 		.pipe($.if(!global.isWatching, $.csso(/*preventRestructuring*/true)))
 

@@ -11,10 +11,7 @@ module.exports = {
 		server: {
 			// We're serving the src folder as well
 			// for sass sourcemap linking
-			baseDir: [dest, src],
-			routes: {
-				'/bower_components': '../app/bower_components'
-			}
+			baseDir: [dest, src]
 		},
 		// proxy: 'http://kiacopy.tumblr.com/',//can be used *instead* of server
 		minify: false,
@@ -34,8 +31,8 @@ module.exports = {
 		]
 	},
 	sass: {
-		includePaths: [src + '/bower_components'],
-		src: src + '/styles/**/*.{sass,scss}',
+		includePaths: ['node_modules'],
+		src: src + '/css/**/*.{sass,scss}',
 		dest: destAssets
 	},
 	images: {
@@ -47,7 +44,7 @@ module.exports = {
 		dest: destAssets
 	},
 	markup: {
-		src: src + '/htdocs/**/*.{html,jade,php}',
+		src: src + '/html/**/*.{html,jade,php}',
 		dest: dest
 	},
 	copy: [{
@@ -55,17 +52,23 @@ module.exports = {
 			src + '/.htaccess',
 			src + '/favicon.ico'
 		],
-		dest: dest
+		dest: dest // root
 	}, {
 		src: [
 			srcAssets + '/fonts/**',
-			srcAssets + '/videos/**'
+			srcAssets + '/videos/**',
+			// srcAssets + '/videos/**', // add more assets
 		],
-		dest: destAssets
-	}],
+		dest: destAssets // assets folder
+	}/*, {
+		src: [
+			srcAssets + '/something/**',
+		],
+		dest: dest + '/anywhere-else'
+	}*/],
 	browserify: [
 		{
-			entries: src + '/scripts/main.js',
+			entries: src + '/js/main.js',
 			dest: destAssets,
 			outputName: 'main.js'
 		}/*, {

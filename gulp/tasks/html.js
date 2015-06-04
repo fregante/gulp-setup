@@ -8,7 +8,6 @@ var es     = require('event-stream');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('html', function() {
-	var phpTemplatesOnly = '**/*.html.php';
 	var jadeFilesOnly = '**/*.jade';
 	var htmlFilesOnly = '**/*.html';
 	var noPartials = function (file) {
@@ -40,17 +39,21 @@ gulp.task('html', function() {
 		.pipe(log.working('<%= file.relative %>'));
 
 	//process jade
-	var jadeStream = stream.pipe($.filter(jadeFilesOnly))
+	var jadeStream = stream.pipe($.filter(jadeFilesOnly));
 
-		//only pass unchanged *main* file and *all* the partials
-		.pipe($.changed(config.dest, {extension: '.html'}))
+	if (global.isWatching) {
+		jadeStream = jadeStream
+			//only pass unchanged *main* file and *all* the partials
+			.pipe($.changed(config.dest, {extension: '.html'}))
 
-		//filter out unchanged partials, but it only works when watching
-		.pipe($.if(global.isWatching, $.cached('html')))
+			//filter out unchanged partials
+			.pipe($.cached('html'))
 
-		//find files that depend on the files that have changed
-		.pipe($.if(global.isWatching, $.jadeInheritance({basedir: 'app/htdocs'})))
+			//find files that depend on the files that have changed
+			.pipe($.jadeInheritance({basedir: 'app/htdocs'}));
+	}
 
+	jadeStream = jadeStream
 		//filter out partials
 		.pipe($.filter(noPartials))
 
@@ -97,44 +100,24 @@ gulp.task('html', function() {
 		.pipe($.jade({basedir: './'}));
 
 
-	//process php templates
-	//TODO: find depency tree like with jadeInheritance
-	var phpStream = stream.pipe($.filter(phpTemplatesOnly))
-
-		//filter out partials
-		.pipe($.filter(noPartials))
-
-		//log what's being worked on
-		.pipe(log.working('<%= file.relative %>'))
-
-		//parse php templates and output static html files
-		.pipe($.php2html())
-
-		//since php templates had a .html.php extension, now it's .html.html
-		//so remove the second ".html"
-		.pipe($.rename(function (file) {
-			file.extname = '';
-		}));
-
-
 	//process all the html files, both static and generated ones
-	stream = es.merge(jadeStream, phpStream, htmlStream)
+	stream = es.merge(jadeStream, htmlStream)
 
 		//compress html files, including inline CSS and JS
-		.pipe($.compressor({
+		.pipe($.htmlmin({
 			type: 'html',
-			// 'preserve-server-script': true,
-			'compress-js': true,
-			'compress-css': true,
-			// 'preserve-comments': true
+			'removeComments': true,
+			'collapseWhitespace': true,
+			'conservativeCollapse': true,
+			'collapseBooleanAttributes': true,
+			'removeAttributeQuotes': true,
+			'removeRedundantAttributes': true,
+			'removeEmptyAttributes': true,
+			'removeScriptTypeAttributes': true,
+			'removeStyleLinkTypeAttributes': true,
+			'minifyJS': true,
+			'minifyCSS': true,
 		}))
-
-		// //link assets to development versions
-		// .pipe($.cdnAbsolutePath({
-		// 	asset: 'assets',
-		// 	cdn: 'http://khx5-gmyp.accessdomain.com/dev/tumblr/'
-		// 	// cdn: 'http://wac.12561.alphacdn.net/8012561/tumblr/tumblr-v4/'
-		// }))
 
 		//save all the files
 		.pipe(gulp.dest(config.dest))
