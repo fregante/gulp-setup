@@ -19,7 +19,7 @@ gulp.task('html', function() {
 	};
 	var jadeData;
 	try {
-		jadeData = require('../../app/htdocs/site-data.js');
+		jadeData = require('../../app/html/site-data.js');
 	} catch (e) {
 		if (e && e.code !== 'MODULE_NOT_FOUND') {
 			throw e;
@@ -50,7 +50,7 @@ gulp.task('html', function() {
 			.pipe($.cached('html'))
 
 			//find files that depend on the files that have changed
-			.pipe($.jadeInheritance({basedir: 'app/htdocs'}));
+			.pipe($.jadeInheritance({basedir: 'app/html'}));
 	}
 
 	jadeStream = jadeStream
@@ -69,7 +69,7 @@ gulp.task('html', function() {
 			/*
 			file.base = 'app/docs'
 			file.cwd = 'C:\path'
-			file.history[0] = C:\\path\\app\\htdocs\\index.jade
+			file.history[0] = C:\\path\\app\\html\\index.jade
 			 */
 			if(isWin) {
 				filepath = file.history[0].replace(/\\+/g, '/');// C:\\file.jade -> C:/file.jade
