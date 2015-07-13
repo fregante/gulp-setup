@@ -9,18 +9,21 @@
    See browserify in gulp/config.js
 */
 
-var browserify    = require('browserify');
-var watchify      = require('watchify');
-var gulp          = require('gulp');
-var source        = require('vinyl-source-stream');
-var log           = require('../util/logging');
-var bundleConfigs = require('../config').browserify;
+var gulp       = require('gulp');
+var browserify = require('browserify');
+var watchify   = require('watchify');
+var source     = require('vinyl-source-stream');
+
+var log        = require('../util/logging');
+
+var configs    = require('../config').browserify;
+var isFirstRun = true;
 
 var $ = require('gulp-load-plugins')();
 
 gulp.task('js', function(callback) {
 
-  var bundleQueue = bundleConfigs.length;
+  var bundleQueue = configs.length;
 
   var browserifyThis = function(bundleConfig) {
 
@@ -39,11 +42,14 @@ gulp.task('js', function(callback) {
       // Log when bundling starts
       log._working({message:bundleConfig.outputName});
 
-      return bundler
-        .bundle()
+      var bundle = bundler.bundle();
+
+      if (!global.isDeploying) {
         // Report compile errors
-        .on('error', log.onError)
-        .on('end', reportFinished)
+      	bundle.on('error', log.onError);
+      }
+
+      bundle
         // Use vinyl-source-stream to make the
         // stream gulp compatible. Specify the
         // desired output filename here.
@@ -53,7 +59,15 @@ gulp.task('js', function(callback) {
         .pipe($.if(!global.isWatching, $.uglify()))
 
         .pipe(gulp.dest(bundleConfig.dest))
-        .pipe(log.done('<%= file.relative %>'));
+        .pipe(log.done('<%= file.relative %>'))
+        .pipe($.if(function () {
+        	var log = global.isWatching && isFirstRun;
+        	isFirstRun = false;
+        	reportFinished();
+        	return log;
+        }, log.info('JS files will be rebuilt on change')));
+
+      return bundle;
     };
 
     if(global.isWatching) {
@@ -73,10 +87,9 @@ gulp.task('js', function(callback) {
         }
       }
     };
-
     return bundle();
   };
 
   // Start bundling with Browserify for each bundleConfig specified
-  bundleConfigs.forEach(browserifyThis);
+  configs.forEach(browserifyThis);
 });
