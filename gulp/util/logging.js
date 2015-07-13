@@ -1,4 +1,6 @@
 'use strict';
+// @todo: remove gulp-notify and simply serve a vinyl stream
+var notifier = require('node-notifier');
 var notify = require('gulp-notify');
 var util = require('gulp-util');
 
@@ -12,19 +14,25 @@ function getAdditionalMessage (options) {
 var log = {};
 log._message = function (options, callback) {
 	util.log(options.title+':', util.colors.magenta(options.message));
-	callback && callback();
+	if (callback) {
+		callback();
+	}
 };
 log._working = function (options, callback) {
 	if (options.message) {
 		util.log(util.colors.cyan('⦿'), options.message, getAdditionalMessage(options));
 	}
-	callback && callback();
+	if (callback) {
+		callback();
+	}
 };
 log._done = function (options, callback) {
 	if (options.message) {
 		util.log(util.colors.green('✓'), options.message, getAdditionalMessage(options));
 	}
-	callback && callback();
+	if (callback) {
+		callback();
+	}
 };
 log._error = function (options, callback) {
 	if (options.message) {
@@ -33,8 +41,11 @@ log._error = function (options, callback) {
 		} else {
 			util.log(util.colors.red('×'), options.message, util.colors.red(options.title));
 		}
+		notifier.notify(options);
 	}
-	callback && callback();
+	if (callback) {
+		callback();
+	}
 };
 
 //for gulp piping
