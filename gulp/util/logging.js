@@ -34,6 +34,14 @@ log._done = function (options, callback) {
 		callback();
 	}
 };
+log._info = function (options, callback) {
+	if (options.message) {
+		util.log(util.colors.blue('ℹ︎'), options.message, getAdditionalMessage(options));
+	}
+	if (callback) {
+		callback();
+	}
+};
 log._error = function (options, callback) {
 	if (options.message) {
 		if (options.title === 'Gulp notification' || options.title === 'Error running Gulp') {
@@ -52,6 +60,7 @@ log._error = function (options, callback) {
 log.message = notify.withReporter(log._message);
 log.working = notify.withReporter(log._working);
 log.done = notify.withReporter(log._done);
+log.info = notify.withReporter(log._info);
 log.error = notify.withReporter(log._error);
 log.onError = log.error.onError('<%= error.message %>');
 
