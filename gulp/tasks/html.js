@@ -38,8 +38,7 @@ gulp.task('html', function() {
 		.pipe(log.working('<%= file.relative %>'));
 
 	//process jade
-	var jadeStream = stream.pipe($.filter(jadeFilesOnly));
-
+	var jadeStream = stream;
 	if (global.isWatching) {
 		jadeStream = jadeStream
 			//only pass unchanged *main* file and *all* the partials
@@ -53,6 +52,9 @@ gulp.task('html', function() {
 	}
 
 	jadeStream = jadeStream
+		// filter out non-jade files
+		.pipe($.filter(jadeFilesOnly))
+
 		//filter out partials
 		.pipe($.filter(noPartials))
 
