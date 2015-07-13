@@ -3,6 +3,8 @@ var gulp   = require('gulp');
 var config = require('../config').markup;
 var log    = require('../util/logging');
 var es     = require('event-stream');
+var path   = require('path');
+var dirSeparator = path.sep.replace('\\', '\\\\');
 
 
 var $ = require('gulp-load-plugins')();
@@ -11,11 +13,8 @@ gulp.task('html', function() {
 	var jadeFilesOnly = '**/*.jade';
 	var htmlFilesOnly = '**/*.html';
 	var noPartials = function (file) {
-		var isWin = /^win/.test(process.platform);
-		if (isWin) {
-			return !/\\_/.test(file.path);
-		}
-		return !/\/_/.test(file.path);
+		var relativePath = path.relative(file.base, file.path);
+		return !new RegExp('(^|'+dirSeparator+')_').test(relativePath);
 	};
 	var jadeData;
 	try {
@@ -62,32 +61,25 @@ gulp.task('html', function() {
 
 		//add "relativeRoot" variable in Jade templates
 		.pipe($.data(function (file) {
-			var isWin = /^win/.test(process.platform);
-			var base;
-			var relativePath;
-			var filepath;
-			/*
-			file.base = 'app/docs'
-			file.cwd = 'C:\path'
-			file.history[0] = C:\\path\\app\\html\\index.jade
-			 */
-			if(isWin) {
-				filepath = file.history[0].replace(/\\+/g, '/');// C:\\file.jade -> C:/file.jade
-				base = file.base.replace(/\\+/g, '/');// C:\path -> C:/path
-				// base = cwd + '/' + file.base + '/';// -> C:/path/app/docs/
-				relativePath = filepath.replace(base, '');// -> file.jade
-			} else {
-				if (file.base[0] === '/') {//absolute path
-					base = file.base;
-				} else {//relative path
-					base = file.cwd + '/' + file.base + '/';
-				}
-				relativePath = file.history[0].replace(base, '');
-			}
-			var depth = (relativePath.match(/\//g) || []).length;
-
+			var relativePath = path.relative(file.base, file.path);
+			var depth = (relativePath.match(new RegExp(dirSeparator, 'g')) || []).length;
+			var relativeRoot = new Array(depth + 1).join( '../' );
 			return {
-				relativeRoot: new Array(depth + 1).join( '../' )
+				relativeRoot: relativeRoot,
+				inRoot: function (path) {
+					if (!path) {
+						return relativeRoot;
+					}
+					// remove preceding slash
+					path = path.replace(/^\//, '');
+
+					// add forward slash in directories
+					if (!/[.]/.test(path.split('/').pop())) {
+						path = path.replace(/([^/])$/,'$1/');
+					}
+
+					return relativeRoot + path;
+				}
 			};
 		}))
 
