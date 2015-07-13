@@ -15,12 +15,7 @@ module.exports = {
 		},
 		// proxy: 'http://kiacopy.tumblr.com/',//can be used *instead* of server
 		minify: false,
-		// ghostMode: {
-		// 	clicks: true,
-		// 	location: true,
-		// 	forms: true,
-		// 	scroll: false
-		// },
+		ghostMode: false,
 		notify: {
         styles: [
 					'display: none',
