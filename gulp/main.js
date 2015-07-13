@@ -9,3 +9,4 @@ gulp.task('build', ['js', 'css', 'images', 'svg', 'html', 'copy']);
 gulp.task('watch', ['setWatch', 'js', 'browserSync']);
 
 gulp.task('default', ['watch'], done);
+gulp.task('nobs', ['browserSync-disable', 'watch'], done);
