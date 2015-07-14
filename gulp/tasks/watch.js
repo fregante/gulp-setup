@@ -17,12 +17,12 @@ gulp.task('setWatch', function() {
   	'HTML, SVG, and SCSS files will be rebuilt on change'
   );
 
-  gulp.watch(config.sass.src,   ['css']);
-  gulp.watch(config.images.src, ['images']);
-  gulp.watch(config.svg.src,    ['svg']);
-  gulp.watch(config.markup.src, ['html', browserSync.reload]);
+  gulp.watch(config.sass.src,   gulp.parallel('css'));
+  gulp.watch(config.images.src, gulp.parallel('images'));
+  gulp.watch(config.svg.src,    gulp.parallel('svg'));
+  gulp.watch(config.markup.src, gulp.parallel('html', browserSync.reload));
 
   config.copy.forEach(function (group) {
-  	gulp.watch(group.src,       ['copy']);
+  	gulp.watch(group.src,       gulp.parallel('copy'));
   });
 });

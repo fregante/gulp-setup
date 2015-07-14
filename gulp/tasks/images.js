@@ -39,4 +39,4 @@ gulp.task('images', function() {
 });
 
 // shortcut
-gulp.task('img', ['images']);
+gulp.task('img', gulp.parallel('images'));

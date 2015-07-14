@@ -10,7 +10,7 @@
     "browserify": "^10.2.6",
     "deglobalify": "^0.2.0",
     "event-stream": "^3.3.1",
-    "gulp": "^3.9.0",
+    "gulp": "gulpjs/gulp#4.0",
     "gulp-buffer": "0.0.2",
     "gulp-cached": "^1.1.0",
     "gulp-changed": "^1.2.1",
