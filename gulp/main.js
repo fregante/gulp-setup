@@ -1,13 +1,15 @@
-
 'use strict';
-var gulp = require('gulp');
-var log  = require('./util/logging');
+var fs    = require('fs');
+var log   = require('./util/logging');
+var gulp  = require('gulp');
+
 function done () {
 	setTimeout(log._done, 100, {message:'gulp init done. Watching…'});
 }
 
-gulp.task('build', gulp.parallel('js', 'css', 'svg', 'html', 'copy'));
-gulp.task('watch', gulp.parallel('setWatch', 'js', 'browserSync'));
+gulp.task('build', gulp.parallel('update-build', 'js'), done);
+gulp.task('watch', gulp.series('setWatch', 'browserSync'), done);
+gulp.task('nobs', gulp.series('browserSync-disable', 'watch'), done);
 
-gulp.task('default', gulp.parallel('watch'), done);
-gulp.task('nobs', gulp.parallel('browserSync-disable', 'watch'), done);
+gulp.task('default', gulp.parallel('watch', 'build'));
+

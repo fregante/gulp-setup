@@ -1,11 +1,28 @@
 var dest = './dist';
 var destAssets = './dist/assets';
 var src = './app';
-var srcAssets = './app/assets';
 
 module.exports = {
-	paths: {
+	src: [
+		src+'/**/*.*',
+		'!**/README.md',
+		'!**/*.js',
+	],
+	dest: dest,
+	sass: {
+		includePaths: ['node_modules'],
 	},
+	browserify: [
+		{
+			entries: src + '/js/main.js',
+			dest: destAssets,
+			outputName: 'main.js'
+		}/*, {
+			entries: src + '/scripts/head.js',
+			dest: destAssets,
+			outputName: 'head.js'
+		}*/
+	],
 	browserSync: {
 		//http://www.browsersync.io/docs/options/
 		server: {
@@ -16,6 +33,11 @@ module.exports = {
 		// proxy: 'http://kiacopy.tumblr.com/',//can be used *instead* of server
 		minify: false,
 		ghostMode: false,
+		logFileChanges: false,
+		open: false,
+		files: [
+			dest + '/**',
+		],
 		notify: {
         styles: [
 					'display: none',
@@ -36,61 +58,6 @@ module.exports = {
 					'-ms-pointer-events: none',
 					'pointer-events: none'
     	]
-    },
-		logFileChanges: false,
-		open: false,
-		files: [
-			dest + '/**',
-			// Exclude Map files
-			'!' + destAssets + '/**.map',
-			'!' + dest + '/**/*.html'
-		]
-	},
-	sass: {
-		includePaths: ['node_modules'],
-		src: src + '/css/**/*.{sass,scss}',
-		dest: destAssets
-	},
-	images: {
-		src: srcAssets + '/images/**',
-		dest: destAssets
-	},
-	svg: {
-		src: srcAssets + '/symbols/**/*.svg',
-		dest: destAssets
-	},
-	markup: {
-		src: src + '/html/**/*.{html,jade,php}',
-		dest: dest
-	},
-	copy: [{
-		src: [
-			src + '/.htaccess',
-			src + '/favicon.ico'
-		],
-		dest: dest // root
-	}, {
-		src: [
-			srcAssets + '/fonts/**',
-			srcAssets + '/videos/**',
-			// srcAssets + '/videos/**', // add more assets
-		],
-		dest: destAssets // assets folder
-	}/*, {
-		src: [
-			srcAssets + '/something/**',
-		],
-		dest: dest + '/anywhere-else'
-	}*/],
-	browserify: [
-		{
-			entries: src + '/js/main.js',
-			dest: destAssets,
-			outputName: 'main.js'
-		}/*, {
-			entries: src + '/scripts/head.js',
-			dest: destAssets,
-			outputName: 'head.js'
-		}*/
-	]
+    }
+	}
 };
